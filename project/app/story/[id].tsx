@@ -12,17 +12,19 @@ import { ArrowLeft } from 'lucide-react-native';
 // Import a video player component
 import { Video } from 'expo-av'; // Make sure expo-av is installed
 import { fetchStoryById, markStoryAsViewed } from '@/utils/api';
-import localVideo from '../../assets/images/noe.mp4';
 
 export default function StoryScreen() {
   const { id } = useLocalSearchParams();
   const [loading, setLoading] = useState(true);
+  console.log('ID:', id);
   const [story, setStory] = useState(null);
-
+  const [localvideo, setLocalVideo] = useState(null);
+  
   useEffect(() => {
     const loadStory = async () => {
       // API integration point - fetch story details
       const storyData = await fetchStoryById(id);
+      setLocalVideo(storyData['video']);
       if (storyData) {
         setStory(storyData);
         // API integration point - mark story as viewed
@@ -57,7 +59,7 @@ export default function StoryScreen() {
       </View>
       <View style={styles.videoContainer}>
         <Video
-          source={localVideo}
+          source={localvideo}
           rate={1.0}
           volume={1.0}
           isMuted={false}
