@@ -20,68 +20,26 @@ const getStoriesForChapter = (chapterId) => {
     '1': [
       { 
         id: '1', 
-        title: 'Noah\'s Ark', 
-        description: 'The story of Noah and the great flood',
-        image: 'https://images.pexels.com/photos/4397899/pexels-photo-4397899.jpeg',
+        title: 'David & Goliath', 
+        description: 'David defeats the giant Goliath',
+        image: 'https://i.postimg.cc/gkRVHJRZ/5.png',
         duration: '3 min'
       },
       { 
         id: '5', 
-        title: 'Adam and Eve', 
-        description: 'The first humans in the Garden of Eden',
-        image: 'https://images.pexels.com/photos/1108701/pexels-photo-1108701.jpeg',
-        duration: '4 min'
-      },
-      { 
-        id: '6', 
-        title: 'Cain and Abel', 
-        description: 'A story about two brothers',
-        image: 'https://images.pexels.com/photos/7693978/pexels-photo-7693978.jpeg',
-        duration: '2 min'
-      },
-      { 
-        id: '7', 
-        title: 'Tower of Babel', 
-        description: 'How different languages began',
-        image: 'https://images.pexels.com/photos/7062/man-people-walking-path.jpg',
-        duration: '3 min'
-      },
-      { 
-        id: '8', 
-        title: 'Abraham and Isaac', 
-        description: 'A test of faith',
-        image: 'https://images.pexels.com/photos/1669754/pexels-photo-1669754.jpeg',
+        title: 'David Plays for Saul', 
+        description: 'David calms King Saul with music',
+        image: 'https://i.postimg.cc/GpQw8dq0/frame4.png',
         duration: '4 min'
       }
     ],
     '2': [
       { 
         id: '9', 
-        title: 'Moses in the Basket', 
-        description: 'A baby rescued from the river',
-        image: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg',
-        duration: '3 min'
-      },
-      { 
-        id: '10', 
-        title: 'The Burning Bush', 
+        title: 'Moses and the Burning Bush', 
         description: 'God speaks to Moses',
-        image: 'https://images.pexels.com/photos/5767616/pexels-photo-5767616.jpeg',
+        image: 'https://i.postimg.cc/g2z1CfGN/6.png',
         duration: '3 min'
-      },
-      { 
-        id: '11', 
-        title: 'The Ten Plagues', 
-        description: 'Troubles in Egypt',
-        image: 'https://images.pexels.com/photos/6157042/pexels-photo-6157042.jpeg',
-        duration: '5 min'
-      },
-      { 
-        id: '12', 
-        title: 'Crossing the Red Sea', 
-        description: 'A miraculous escape',
-        image: 'https://images.pexels.com/photos/1001778/pexels-photo-1001778.jpeg',
-        duration: '4 min'
       }
     ],
     '3': [
@@ -126,24 +84,19 @@ const getChapterInfo = (chapterId) => {
   // API integration point - fetch chapter info
   const chapters = {
     '1': { 
-      title: 'Genesis', 
-      description: 'The beginning of everything', 
-      image: 'https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg'
+      title: 'David', 
+      description: 'A man after God\'s own heart', 
+      image: 'https://i.postimg.cc/qvtJyVyz/david.png'
     },
     '2': { 
-      title: 'Exodus', 
+      title: 'Moses', 
       description: 'Freedom from slavery in Egypt', 
-      image: 'https://images.pexels.com/photos/33041/antelope-canyon-lower-canyon-arizona.jpg'
+      image: 'https://i.postimg.cc/hv83w0wk/moses2.png'
     },
     '3': {
-      title: 'Daniel',
-      description: 'Faith and courage in Babylon',
-      image: 'https://images.pexels.com/photos/247676/pexels-photo-247676.jpeg'
-    },
-    '4': {
-      title: 'Jonah',
-      description: 'Adventures with a big fish',
-      image: 'https://images.pexels.com/photos/3155726/pexels-photo-3155726.jpeg'
+      title: 'Noe',
+      description: 'Faith and courage through the flood',
+      image: 'https://i.postimg.cc/BnP2nvZ6/Noe2.png'
     }
   };
   
@@ -273,6 +226,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#FFFFFF',
+    
   },
   headerContainer: {
     height: 200,
@@ -281,6 +235,8 @@ const styles = StyleSheet.create({
   headerImage: {
     width: '100%',
     height: '100%',
+    resizeMode: 'contain',
+    paddingLeft: 200,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -312,6 +268,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 16,
+
   },
   storyItem: {
     backgroundColor: '#FFFFFF',

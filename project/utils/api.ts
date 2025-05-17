@@ -70,30 +70,23 @@ export const fetchChapters = async () => {
       { 
         id: '1', 
         title: 'David', 
-        description: 'The beginning of everything', 
+        description: 'A man after God\'s own heart', 
         image: 'https://i.postimg.cc/qvtJyVyz/david.png',
-        storyCount: 5
+        storyCount: 2
       },
       { 
         id: '2', 
         title: 'Moses', 
         description: 'Freedom from slavery in Egypt', 
-        image: 'https://i.postimg.cc/3JfrkJys/moses.png',
-        storyCount: 4
+        image: 'https://i.postimg.cc/hv83w0wk/moses2.png',
+        storyCount: 1
       },
       {
         id: '3',
-        title: 'Daniel',
-        description: 'Faith and courage in Babylon',
-        image: 'https://images.pexels.com/photos/247676/pexels-photo-247676.jpeg',
+        title: 'Noe',
+        description: 'Faith and courage through the flood',
+        image: 'https://i.postimg.cc/BnP2nvZ6/Noe2.png',
         storyCount: 3
-      },
-      {
-        id: '4',
-        title: 'Jonah',
-        description: 'Adventures with a big fish',
-        image: 'https://images.pexels.com/photos/3155726/pexels-photo-3155726.jpeg',
-        storyCount: 1
       }
     ];
   } catch (error) {

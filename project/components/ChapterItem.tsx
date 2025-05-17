@@ -24,7 +24,7 @@ const ChapterItem = ({ id, title, description, image, storyCount }: ChapterProps
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>{description}</Text>
           <View style={styles.storyInfo}>
-            <Book size={16} color="#FFFFFF" />
+            <Book size={16} color="#87CEEB" />
             <Text style={styles.storyCount}>{storyCount} Stories</Text>
           </View>
         </View>
@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    resizeMode: 'contain',
+    marginLeft: 100,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

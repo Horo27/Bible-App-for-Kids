@@ -20,7 +20,7 @@ export default function AboutScreen() {
         
         <View style={styles.missionImageContainer}>
           <Image 
-            source={{ uri: 'https://images.pexels.com/photos/296301/pexels-photo-296301.jpeg' }} 
+            source={{ uri: 'https://i.postimg.cc/rsCRrd0G/Chat-GPT-Image-May-17-2025-06-08-03-PM.png' }} 
             style={styles.missionImage} 
           />
         </View>
@@ -36,7 +36,7 @@ export default function AboutScreen() {
         
         <View style={styles.featureItem}>
           <View style={styles.featureIcon}>
-            <Heart size={24} color="#8A4FFF" />
+            <Heart size={24} color="#87CEEB" />
           </View>
           <View>
             <Text style={styles.featureTitle}>Child-Friendly Content</Text>
@@ -48,7 +48,7 @@ export default function AboutScreen() {
         
         <View style={styles.featureItem}>
           <View style={styles.featureIcon}>
-            <Heart size={24} color="#8A4FFF" />
+            <Heart size={24} color="#87CEEB" />
           </View>
           <View>
             <Text style={styles.featureTitle}>Interactive Experience</Text>
@@ -60,7 +60,7 @@ export default function AboutScreen() {
         
         <View style={styles.featureItem}>
           <View style={styles.featureIcon}>
-            <Heart size={24} color="#8A4FFF" />
+            <Heart size={24} color="#87CEEB" />
           </View>
           <View>
             <Text style={styles.featureTitle}>Educational Content</Text>
@@ -90,7 +90,7 @@ export default function AboutScreen() {
           style={styles.websiteButton}
           onPress={() => Linking.openURL('https://biblestories.app')}
         >
-          <ExternalLink size={20} color="#8A4FFF" />
+          <ExternalLink size={20} color="#1F2937" />
           <Text style={styles.websiteButtonText}>Visit Our Website</Text>
         </TouchableOpacity>
       </View>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
   },
   header: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     padding: 24,
     paddingTop: 20,
     borderBottomLeftRadius: 24,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   missionImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   featureItem: {
     flexDirection: 'row',
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     color: '#4B5563',
   },
   contactButton: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   websiteButton: {
-    backgroundColor: '#F0E6FF',
+    backgroundColor: '#87CEEB',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   websiteButtonText: {
-    color: '#8A4FFF',
+    color: '#1F2937',
     fontWeight: '600',
     fontSize: 16,
     marginLeft: 8,
