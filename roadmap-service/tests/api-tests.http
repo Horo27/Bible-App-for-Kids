@@ -1,0 +1,2 @@
+### Get all roadmaps for a certain Chapter
+GET http://localhost:3002/roadmap/123/roadmap

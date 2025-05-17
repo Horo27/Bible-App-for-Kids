@@ -1,0 +1,8 @@
+### API Tests for Chapter Gateway
+GET http://localhost:4000/chapter-gateway/chapter/getChapters 
+
+### API Tests for Roadmap Gateway
+GET http://localhost:4000/roadmap-gateway/roadmap/123/roadmap
+
+### API Tests for Level Gateway
+GET http://localhost:4000/level-gateway/levels/123/getLevels

@@ -1,0 +1,2 @@
+### Get all the levels for a certain Roadmap
+GET http://localhost:3003/levels/123/getLevels

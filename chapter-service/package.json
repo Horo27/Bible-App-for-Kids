@@ -1,0 +1,21 @@
+{
+  "name": "chapter-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.0",
+    "supertest": "^6.1.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}

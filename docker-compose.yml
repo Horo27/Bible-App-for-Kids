@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    networks:
+      - bible-app-net
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    ports:
+      - "4000:4000"
+    depends_on:
+      - roadmap-service
+      - chapter-service
+      - level-service
+    networks:
+      - bible-app-net
+
+  roadmap-service:
+    build:
+      context: ./roadmap-service
+    ports:
+      - "3001:3001"
+    networks:
+      - bible-app-net
+
+  chapter-service:
+    build:
+      context: ./chapter-service
+    ports:
+      - "3002:3002"
+    networks:
+      - bible-app-net
+
+  level-service:
+    build:
+      context: ./level-service
+    ports:
+      - "3003:3003"
+    networks:
+      - bible-app-net
+
+networks:
+  bible-app-net:
+    driver: bridge
