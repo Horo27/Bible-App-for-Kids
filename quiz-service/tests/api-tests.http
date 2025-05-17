@@ -1,0 +1,24 @@
+### Get Quiz 1
+GET http://localhost:3004/quiz/1
+
+### Get Quiz 2
+GET http://localhost:3004/quiz/2
+
+### Get Question 2 from Quiz 1
+GET http://localhost:3004/quiz/1/question/2
+
+### Check answer for Question 2 from Quiz 1 (correct answer: 1)
+POST http://localhost:3004/quiz/1/question/2/answer
+Content-Type: application/json
+
+{
+  "answer": 1
+}
+
+### Check answer for Question 3 from Quiz 2 (wrong answer: 0)
+POST http://localhost:3004/quiz/2/question/3/answer
+Content-Type: application/json
+
+{
+  "answer": 0
+}
