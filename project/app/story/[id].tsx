@@ -6,20 +6,23 @@ import {
   SafeAreaView, 
   TouchableOpacity, 
   ActivityIndicator,
-  ScrollView // Added ScrollView for quiz content
+  ScrollView, // Added ScrollView for quiz content
+  Alert
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native';
+import { ArrowLeft, Heart } from 'lucide-react-native';
 import { Video, AVPlaybackStatus } from 'expo-av'; // Make sure AVPlaybackStatus is imported
 import { fetchStoryById, markStoryAsViewed } from '@/utils/api';
+import { getHeartStatus, HeartStatus, MAX_HEARTS, decrementHeart } from '@/utils/heartManager'; // Import
 
 export default function StoryScreen() {
   const { id } = useLocalSearchParams();
   const [loading, setLoading] = useState(true);
-  console.log('ID:', id);
   const [story, setStory] = useState(null);
-  console.log("Story:", story)
   const [localvideo, setLocalVideo] = useState(null);
+
+  // Heart State
+  const [heartStatus, setHeartStatus] = useState<HeartStatus>({ hearts: MAX_HEARTS, isBlocked: false });
 
   // Quiz State
   const [showQuiz, setShowQuiz] = useState(false);
@@ -37,31 +40,81 @@ export default function StoryScreen() {
       setSelectedAnswers({});
       setQuizScore(0);
       setQuizFinished(false);
-      // API integration point - fetch story details
-      const storyData = await fetchStoryById(id);
-      setLocalVideo(storyData['video']);
+
+      const currentHeartStatus = await getHeartStatus();
+      setHeartStatus(currentHeartStatus);
+
+      if (currentHeartStatus.isBlocked) {
+        setLoading(false);
+        Alert.alert(
+          "Access Blocked",
+          currentHeartStatus.message || "You have run out of hearts. Please wait.",
+          [{ text: "OK", onPress: () => router.replace('/(tabs)/chapters') }]
+        );
+        return;
+      }
+
+      const storyData = await fetchStoryById(id as string);
       if (storyData) {
         setStory(storyData);
-        // API integration point - mark story as viewed
-        markStoryAsViewed(id);
+        // setLocalVideo(storyData.video); // Use story.video directly
+        markStoryAsViewed(id as string);
+      } else {
+        Alert.alert("Error", "Story not found.", [{ text: "OK", onPress: () => router.back() }]);
       }
       setLoading(false);
     };
     loadStory();
   }, [id]);
 
-  const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+   const renderHeartsDisplay = () => (
+      <View style={styles.heartsHeaderContainer}>
+        {Array.from({ length: MAX_HEARTS }).map((_, i) => (
+          <Heart
+            key={i}
+            size={28}
+            color={i < heartStatus.hearts ? '#FF0000' : '#BDBDBD'}
+            fill={i < heartStatus.hearts ? '#FF0000' : 'none'}
+            style={{ marginRight: 5 }}
+          />
+        ))}
+      </View>
+  );
+const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+    if (heartStatus.isBlocked) return;
     if (status.isLoaded && status.didJustFinish) {
       if (story?.quiz && story.quiz.length > 0) {
-        setShowQuiz(true); // Show quiz when video finishes
+        setShowQuiz(true);
       } else {
-        // Optionally, navigate back or show a "Story Complete" message if no quiz
         router.back();
       }
     }
   };
 
+  const handleAnswerSelection = async (questionIndex: number, optionId: string) => {
+    // Prevent re-answering or answering if blocked
+    if (selectedAnswers[questionIndex] !== undefined || heartStatus.isBlocked) return;
+
+    setSelectedAnswers(prev => ({ ...prev, [questionIndex]: optionId }));
+
+    const currentQuestion = story?.quiz?.[questionIndex];
+    if (currentQuestion && optionId !== currentQuestion.correctAnswerId) {
+      // Answer is incorrect, decrement heart
+      const newStatus = await decrementHeart();
+      setHeartStatus(newStatus);
+      if (newStatus.isBlocked) {
+        Alert.alert(
+          "No Hearts Left!",
+          newStatus.message || "Access to stories is now blocked.",
+          [{ text: "OK", onPress: () => router.replace('/(tabs)/chapters') }]
+        );
+        // No need to proceed further with quiz UI updates if blocked
+      }
+    }
+  };
+
   const submitQuiz = () => {
+    if (heartStatus.isBlocked) return; // Don't submit if blocked
     let score = 0;
     story?.quiz?.forEach((q, index) => {
       if (selectedAnswers[index] === q.correctAnswerId) {
@@ -73,37 +126,70 @@ export default function StoryScreen() {
   };
 
   const handleNextQuestion = () => {
+    if (heartStatus.isBlocked) {
+      Alert.alert("Access Blocked", heartStatus.message, [{ text: "OK", onPress: () => router.replace('/(tabs)/chapters') }]);
+      return;
+    }
     if (currentQuestionIndex < (story?.quiz?.length || 0) - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
-      // Last question answered, now submit or show summary
       submitQuiz();
     }
   };
   
-  const resetQuizAndVideo = () => {
+  const resetQuizAndVideo = async () => {
+    const currentStatus = await getHeartStatus(); // Re-check status
+    setHeartStatus(currentStatus);
+    if (currentStatus.isBlocked) {
+      Alert.alert("Access Blocked", currentStatus.message, [{ text: "OK", onPress: () => router.replace('/(tabs)/chapters') }]);
+      return;
+    }
     setShowQuiz(false);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setQuizScore(0);
     setQuizFinished(false);
-    videoRef.current?.replayAsync(); // Replay video
+    videoRef.current?.replayAsync();
   };
 
-  const handleAnswerSelection = (questionIndex: number, optionId: string) => {
-    setSelectedAnswers(prev => ({ ...prev, [questionIndex]: optionId }));
-  };
-
-  if (loading || !story) {
+ if (loading) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
+        {/* Consistent loading header can be added if desired, or keep simple indicator */}
+        <ActivityIndicator size="large" color="#8A4FFF" />
+      </SafeAreaView>
+    );
+  }
+
+  if (heartStatus.isBlocked && !loading) { // Ensure not to show this during initial load flicker
+     return (
+        <SafeAreaView style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Access Blocked</Text>
+            {renderHeartsDisplay()}
+          </View>
+          <View style={styles.blockMessageContainer}>
+            <Text style={styles.blockMessageText}>{heartStatus.message || "Your access is blocked."}</Text>
+            <TouchableOpacity style={styles.quizButton} onPress={() => router.replace('/(tabs)/chapters')}>
+              <Text style={styles.quizButtonText}>Go to Chapters</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      );
+  }
+
+  if (!story) { // Should be caught by loadScreenData's alert, but as a fallback
+    return (
+      <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <ArrowLeft size={24} color="#FFFFFF" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Loading...</Text>
+          <Text style={styles.headerTitle}>Error</Text>
         </View>
-        <ActivityIndicator size="large" color="#8A4FFF" />
+        <View style={styles.blockMessageContainer}>
+            <Text style={styles.blockMessageText}>Could not load story details.</Text>
+        </View>
       </SafeAreaView>
     );
   }
@@ -118,14 +204,15 @@ export default function StoryScreen() {
               <ArrowLeft size={24} color="#FFFFFF" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{story.title} - Quiz Results</Text>
+            {renderHeartsDisplay()}
           </View>
           <View style={styles.quizContainer}>
             <Text style={styles.quizTitle}>Quiz Complete!</Text>
             <Text style={styles.quizScoreText}>Your Score: {quizScore} / {story.quiz.length}</Text>
-            <TouchableOpacity style={styles.quizButton} onPress={resetQuizAndVideo}>
+            <TouchableOpacity style={styles.quizButton} onPress={resetQuizAndVideo} disabled={heartStatus.isBlocked}>
               <Text style={styles.quizButtonText}>Watch Again & Retake Quiz</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.quizButton} onPress={() => router.back()}>
+            <TouchableOpacity style={styles.quizButton} onPress={() => router.replace('/(tabs)/chapters')}>
               <Text style={styles.quizButtonText}>Back to Stories</Text>
             </TouchableOpacity>
           </View>
@@ -139,10 +226,11 @@ export default function StoryScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+           <TouchableOpacity onPress={() => router.back()} style={styles.backButton} disabled={heartStatus.isBlocked}>
             <ArrowLeft size={24} color="#FFFFFF" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>{story.title} - Quiz</Text>
+          {renderHeartsDisplay()}
         </View>
         <ScrollView style={styles.quizContainer}>
           <Text style={styles.quizTitle}>Question {currentQuestionIndex + 1} of {story.quiz.length}</Text>
@@ -159,8 +247,6 @@ export default function StoryScreen() {
               } else if (isSelected && !isCorrect) {
                 optionDynamicStyle.push(styles.incorrectOption);
               }
-              // Add a style for non-selected options when an answer has been made, if desired
-              // e.g., if (!isSelected) optionDynamicStyle.push(styles.disabledOptionLook);
             }
             
             return (
@@ -168,20 +254,20 @@ export default function StoryScreen() {
                 key={option.id}
                 style={optionDynamicStyle}
                 onPress={() => {
-                  if (!hasAnsweredCurrentQuestion) { // Only allow selection if not already answered
+                  if (!hasAnsweredCurrentQuestion) {
                     handleAnswerSelection(currentQuestionIndex, option.id);
                   }
                 }}
-                disabled={hasAnsweredCurrentQuestion} // Disable button after an answer is selected
+                disabled={hasAnsweredCurrentQuestion || heartStatus.isBlocked}
               >
                 <Text style={styles.optionText}>{option.id}. {option.text}</Text>
               </TouchableOpacity>
             );
           })}
           <TouchableOpacity
-            style={[styles.quizButton, !hasAnsweredCurrentQuestion && styles.disabledButton]}
+            style={[styles.quizButton, (!hasAnsweredCurrentQuestion || heartStatus.isBlocked) && styles.disabledButton]}
             onPress={handleNextQuestion}
-            disabled={!hasAnsweredCurrentQuestion}
+            disabled={!hasAnsweredCurrentQuestion || heartStatus.isBlocked}
           >
             <Text style={styles.quizButtonText}>
               {currentQuestionIndex === story.quiz.length - 1 ? 'Finish Quiz' : 'Next Question'}
@@ -196,14 +282,16 @@ export default function StoryScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton} disabled={heartStatus.isBlocked}>
           <ArrowLeft size={24} color="#FFFFFF" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{"story.title"}</Text>
+        <Text style={styles.headerTitle}>{story.title}</Text>
+        {renderHeartsDisplay()}
       </View>
       <View style={styles.videoContainer}>
         <Video
-          source={localvideo}
+          ref={videoRef} // Assign ref
+          source={story.video} // Use story.video from fetched data
           rate={1.0}
           volume={1.0}
           isMuted={false}
@@ -211,7 +299,7 @@ export default function StoryScreen() {
           shouldPlay
           useNativeControls
           style={styles.video}
-          onPlaybackStatusUpdate={handlePlaybackStatusUpdate} // Add status update handler
+          onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
         />
       </View>
     </SafeAreaView>
@@ -235,6 +323,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 16,
+    justifyContent: 'space-between',
+  },
+  heartsHeaderContainer: {
+    flexDirection: 'row',
   },
   backButton: {
     marginRight: 16,
@@ -243,22 +335,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#FFFFFF',
+    flexShrink: 1, // Allow title to shrink if hearts take space
+    marginRight: 8, // Add some space before hearts
   },
   videoContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // padding: 16, // Removed padding to allow video to be larger
-    backgroundColor: '#000000', // Added black background for video area
+    backgroundColor: '#000000',
   },
   video: {
-    width: '100%', // Make video take full width of container
-    aspectRatio: 16/9, // Maintain aspect ratio, adjust if your videos differ
-    // height: 250, // Replaced by aspectRatio for responsiveness
-    // backgroundColor: '#000', // Moved to videoContainer
-    // borderRadius: 12, // Optional: if you want rounded corners on video
+    width: '100%', // Changed from 50% to take full width
+    aspectRatio: 16/9,
   },
-  // Quiz Styles
   quizContainer: {
     flex: 1,
     padding: 20,
@@ -276,7 +365,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     lineHeight: 24,
   },
- optionButton: {
+  optionButton: {
     backgroundColor: '#FFFFFF',
     padding: 15,
     borderRadius: 8,
@@ -284,17 +373,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E0E0E0',
   },
-  selectedOption: { // This style can indicate the currently tapped option before feedback
-    borderColor: '#8A4FFF', // Purple border for selection
-    // backgroundColor: '#E8DAFF', // Light purple background for selection
+  selectedOption: {
+    borderColor: '#8A4FFF',
   },
   correctOption: {
-    backgroundColor: '#D1FAE5', // Light green background
-    borderColor: '#10B981',    // Green border
+    backgroundColor: '#D1FAE5',
+    borderColor: '#10B981',
   },
   incorrectOption: {
-    backgroundColor: '#FEE2E2', // Light red background
-    borderColor: '#EF4444',    // Red border
+    backgroundColor: '#FEE2E2',
+    borderColor: '#EF4444',
   },
   optionText: {
     fontSize: 16,
@@ -313,7 +401,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   disabledButton: {
-    backgroundColor: '#C9B6F4', // Lighter color for disabled state
+    backgroundColor: '#C9B6F4',
   },
   quizScoreText: {
     fontSize: 20,
@@ -321,4 +409,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 20,
   },
+  blockMessageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#F9FAFB',
+  },
+  blockMessageText: {
+    fontSize: 18,
+    color: '#333333',
+    textAlign: 'center',
+    marginBottom: 20,
+  }
 });
