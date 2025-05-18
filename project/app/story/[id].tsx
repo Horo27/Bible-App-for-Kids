@@ -199,7 +199,7 @@ export default function StoryScreen() {
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color="#FFFFFF" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{"story.title"}</Text>
+        <Text style={styles.headerTitle}>{story.title}</Text>
       </View>
       <View style={styles.videoContainer}>
         <Video

@@ -6,6 +6,8 @@ import FeaturedStory from '@/components/FeaturedStory';
 import RecentlyViewed from '@/components/RecentlyViewed';
 import { fetchFeaturedStories, fetchRecentlyViewed } from '@/utils/api';
 
+let variableId = 0;
+
 export default function HomeScreen() {
   const [loading, setLoading] = useState(true);
   const [featuredStories, setFeaturedStories] = useState([]);
@@ -23,12 +25,12 @@ export default function HomeScreen() {
     // Mock data for demo
     setFeaturedStories([
       { id: '1', title: 'David & Goliath', image: 'https://i.postimg.cc/gkRVHJRZ/5.png', description: 'David defeats the giant Goliath' },
-      { id: '2', title: 'David Plays for Saul', image: 'https://i.postimg.cc/GpQw8dq0/frame4.png', description: 'David calms King Saul with music' },
-      { id: '2', title: 'Noah`s Ark', image: 'https://i.postimg.cc/1XhJcH2v/noah-s-ark.png', description: 'David calms King Saul with music' }
+      { id: '5', title: 'David Plays for Saul', image: 'https://i.postimg.cc/GpQw8dq0/frame4.png', description: 'David calms King Saul with music' },
+      { id: '13', title: 'Noah`s Ark', image: 'https://i.postimg.cc/1XhJcH2v/noah-s-ark.png', description: 'David calms King Saul with music' }
     ]);
     
     setRecentStories([
-      { id: '4', title: 'David & Goliath', image: 'https://i.postimg.cc/gkRVHJRZ/5.png'},
+      { id: '1', title: 'David & Goliath', image: 'https://i.postimg.cc/gkRVHJRZ/5.png'},
       { id: '5', title: 'David Plays for Saul', image: 'https://i.postimg.cc/GpQw8dq0/frame4.png'}
     ]);
     
@@ -69,7 +71,7 @@ export default function HomeScreen() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
           {featuredStories.map((story) => (
             <FeaturedStory 
-              key={story.id} 
+              key={variableId++} 
               story={story} 
               onPress={() => router.push(`/story/${story.id}`)} 
             />
@@ -82,7 +84,7 @@ export default function HomeScreen() {
         <View style={styles.recentGrid}>
           {recentStories.map((story) => (
             <RecentlyViewed 
-              key={story.id} 
+              key={variableId++} 
               story={story} 
               onPress={() => router.push(`/story/${story.id}`)} 
             />
