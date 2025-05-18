@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
   },
   header: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     paddingHorizontal: 16,
     paddingVertical: 20,
     flexDirection: 'row',

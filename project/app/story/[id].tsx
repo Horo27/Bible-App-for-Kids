@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#87CEEB',
   },
   blockMessageText: {
     fontSize: 18,

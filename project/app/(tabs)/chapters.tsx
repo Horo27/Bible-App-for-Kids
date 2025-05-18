@@ -32,6 +32,7 @@ export default function ChaptersScreen() {
   );
 
   const renderHeartsDisplay = () => (
+    
     <View style={styles.heartsHeaderContainer}>
       {Array.from({ length: MAX_HEARTS }).map((_, i) => (
         <Heart
@@ -64,14 +65,6 @@ export default function ChaptersScreen() {
         <Text style={styles.headerTitle}>Bible Chapters</Text>
         {renderHeartsDisplay()}
       </View>
-      <Search size={20} color="#6B7280" style={styles.searchIcon} />
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search chapters..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        placeholderTextColor="#9CA3AF"
-      />
        <FlatList
         data={filteredChapters}
         keyExtractor={(item) => item.id}
@@ -93,7 +86,11 @@ export default function ChaptersScreen() {
         
       />
     {/*Reset button also available on blocked screen for testing */}
-    <TouchableOpacity style={[styles.resetButton, {marginTop: 10}]} onPress={resetUserProgressForTesting}>
+    <TouchableOpacity style={[styles.resetButton, {marginTop: 10}]} onPress={async () => {
+    await resetUserProgressForTesting(); // Reset on backend/storage
+    const newStatus = await getHeartStatus(); // Fetch new status
+    setHeartStatus(newStatus); // Update UI
+  }}>
       <Text style={styles.resetButtonText}>Reset Hearts (Test)</Text>
     </TouchableOpacity>
     </SafeAreaView>
@@ -106,7 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
   },
   header: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     paddingHorizontal: 16,
     paddingVertical: 20,
     flexDirection: 'row',
@@ -184,6 +181,9 @@ const styles = StyleSheet.create({
     color: '#1F2937',
   },
   resetButton: {
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 10,
     backgroundColor: '#FFA500', // Orange color for testing button
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -194,5 +194,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  listContent: {
+    width: '90%',
+    alignSelf: 'center',
+    paddingTop: 16,
   },
 });
