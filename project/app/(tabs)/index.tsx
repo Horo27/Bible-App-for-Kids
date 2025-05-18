@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     color: '#8A4FFF',
   },
   welcomeSection: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     padding: 24,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,

@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   quizButton: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   disabledButton: {
-    backgroundColor: '#C9B6F4', // Lighter color for disabled state
+    backgroundColor: '#B0E5F5', // Lighter color for disabled state
   },
   quizScoreText: {
     fontSize: 20,
