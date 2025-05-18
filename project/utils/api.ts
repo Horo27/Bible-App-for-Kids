@@ -111,90 +111,23 @@ export const fetchStoryById = async (id: string) => {
     const storyData = {
       '1': {
         id: '1',
-        title: 'Noah\'s Ark',
-        audioUrl: 'https://example.com/audio/noahs-ark.mp3',
-        duration: 180, // 3 minutes
-        slides: [
-          {
-            image: 'https://images.pexels.com/photos/4397899/pexels-photo-4397899.jpeg',
-            text: 'God told Noah to build a giant boat called an ark.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg',
-            text: 'Noah brought two of every animal onto the ark.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg',
-            text: 'It rained for 40 days and 40 nights, flooding the whole earth.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/1477199/pexels-photo-1477199.jpeg',
-            text: 'Noah sent out a dove, which returned with an olive leaf.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg',
-            text: 'God put a rainbow in the sky as a promise to never flood the earth again.'
-          }
-        ],
-        video: require('..//assets//images//noe.mp4')
+        title: 'David & Goliath',
+        video: require('..//assets//images//david&goliath.mp4')
       },
       '5': {
         id: '5',
-        title: 'Pov2',
-        audioUrl: 'https://example.com/audio/noahs-ark.mp3',
-        duration: 180, // 3 minutes
-        slides: [
-          {
-            image: 'https://images.pexels.com/photos/4397899/pexels-photo-4397899.jpeg',
-            text: 'God told Noah to build a giant boat called an ark.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg',
-            text: 'Noah brought two of every animal onto the ark.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg',
-            text: 'It rained for 40 days and 40 nights, flooding the whole earth.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/1477199/pexels-photo-1477199.jpeg',
-            text: 'Noah sent out a dove, which returned with an olive leaf.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg',
-            text: 'God put a rainbow in the sky as a promise to never flood the earth again.'
-          }
-        ],
+        title: 'David plays for Saul',
+        video: require('..//assets//images//david_plays_saul.mp4')
+      },
+      '9':{
+        id: '9',
+        title: 'Moses and the burning bush',
         video: require('..//assets//images//david.mp4')
       },
       '13': {
         id: '13',
-        title: 'Pov2',
-        audioUrl: 'https://example.com/audio/noahs-ark.mp3',
-        duration: 180, // 3 minutes
-        slides: [
-          {
-            image: 'https://images.pexels.com/photos/4397899/pexels-photo-4397899.jpeg',
-            text: 'God told Noah to build a giant boat called an ark.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg',
-            text: 'Noah brought two of every animal onto the ark.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg',
-            text: 'It rained for 40 days and 40 nights, flooding the whole earth.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/1477199/pexels-photo-1477199.jpeg',
-            text: 'Noah sent out a dove, which returned with an olive leaf.'
-          },
-          {
-            image: 'https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg',
-            text: 'God put a rainbow in the sky as a promise to never flood the earth again.'
-          }
-        ],
-        video: require('..//assets//images//prezentare2.mp4')
+        title: "Noah's Ark",
+        video: require('..//assets//images//noe.mp4')
       },
       // Add more stories as needed
     };

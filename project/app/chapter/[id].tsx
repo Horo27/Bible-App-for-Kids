@@ -45,35 +45,11 @@ const getStoriesForChapter = (chapterId) => {
     '3': [
       { 
         id: '13', 
-        title: 'Daniel in the Lion\'s Den', 
-        description: 'Faith protects Daniel from lions',
-        image: 'https://images.pexels.com/photos/247676/pexels-photo-247676.jpeg',
-        duration: '3 min'
+        title: "Noah's Ark", 
+        description: 'Faith and courage through the flood',
+        image: "https://i.postimg.cc/1XhJcH2v/noah-s-ark.png"
       },
-      { 
-        id: '14', 
-        title: 'The Fiery Furnace', 
-        description: 'Three friends who wouldn\'t bow down',
-        image: 'https://images.pexels.com/photos/266463/pexels-photo-266463.jpeg',
-        duration: '4 min'
-      },
-      { 
-        id: '15', 
-        title: 'The Writing on the Wall', 
-        description: 'A mysterious message appears',
-        image: 'https://images.pexels.com/photos/952670/pexels-photo-952670.jpeg',
-        duration: '3 min'
-      }
     ],
-    '4': [
-      { 
-        id: '4', 
-        title: 'Jonah and the Whale', 
-        description: 'A prophet swallowed by a big fish',
-        image: 'https://images.pexels.com/photos/4666754/pexels-photo-4666754.jpeg',
-        duration: '3 min'
-      }
-    ]
   };
   
   return mockStories[chapterId] || [];
