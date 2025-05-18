@@ -10,8 +10,9 @@ import {
   ActivityIndicator 
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
-import { ArrowLeft, Book } from 'lucide-react-native';
+import { ArrowLeft, Book, Heart } from 'lucide-react-native';
 import { fetchStoryById } from '@/utils/api';
+import { getHeartStatus, HeartStatus, MAX_HEARTS } from '@/utils/heartManager'; // Import
 
 // Mock data for chapter stories - replace with API call
 const getStoriesForChapter = (chapterId) => {
@@ -81,14 +82,19 @@ const getChapterInfo = (chapterId) => {
   return chapters[chapterId] || { title: 'Unknown', description: '', image: '' };
 };
 
+
 export default function ChapterDetailScreen() {
   const { id } = useLocalSearchParams();
   const [loading, setLoading] = useState(true);
   const [chapter, setChapter] = useState(null);
   const [stories, setStories] = useState([]);
+  const [heartStatus, setHeartStatus] = useState<HeartStatus>({ hearts: MAX_HEARTS, isBlocked: false });
   
   useEffect(() => {
+    
     const loadChapterData = async () => {
+      const currentHeartStatus = await getHeartStatus();
+      setHeartStatus(currentHeartStatus);
       // API integration points
       const chapterInfo = getChapterInfo(id);
       const chapterStories = getStoriesForChapter(id);
@@ -101,6 +107,20 @@ export default function ChapterDetailScreen() {
     loadChapterData();
   }, [id]);
   
+  const renderHeartsDisplay = () => (
+    <View style={styles.heartsHeaderContainer}>
+      {Array.from({ length: MAX_HEARTS }).map((_, i) => (
+        <Heart
+          key={i}
+          size={28}
+          color={i < heartStatus.hearts ? '#FF0000' : '#BDBDBD'}
+          fill={i < heartStatus.hearts ? '#FF0000' : 'none'}
+          style={{ marginRight: 5 }}
+        />
+      ))}
+    </View>
+  );
+
   if (loading) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
@@ -120,11 +140,12 @@ export default function ChapterDetailScreen() {
   
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.navBar}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+      <View style={styles.header}>
+         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color="#FFFFFF" />
         </TouchableOpacity>
         <Text style={styles.navTitle}>{chapter.title}</Text>
+        {renderHeartsDisplay()}
       </View>
       
       <FlatList
@@ -176,6 +197,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9FAFB',
   },
+  header: {
+    backgroundColor: '#8A4FFF',
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', // To space title and hearts
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
   loadingContainer: {
     flex: 1,
     backgroundColor: '#F9FAFB',
@@ -189,6 +223,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 16,
     color: '#8A4FFF',
+  },
+  heartsHeaderContainer: { // Renamed for clarity from StoryScreen
+    flexDirection: 'row',
   },
   navBar: {
     backgroundColor: '#87CEEB',
