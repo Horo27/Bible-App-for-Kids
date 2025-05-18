@@ -208,6 +208,7 @@ export default function StoryScreen() {
           volume={1.0}
           isMuted={false}
           resizeMode="contain"
+          ignoreSilentSwitch="ignore"
           shouldPlay
           useNativeControls
           style={styles.video}
@@ -249,13 +250,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // padding: 16, // Removed padding to allow video to be larger
-    backgroundColor: '#000000', // Added black background for video area
+    backgroundColor: '#FFFFFF', // Added black background for video area
   },
   video: {
-    width: '100%', // Make video take full width of container
-    aspectRatio: 16/9, // Maintain aspect ratio, adjust if your videos differ
+    width: '102%', // Make video take full width of container
+    aspectRatio: 1/1.04, // Maintain aspect ratio, adjust if your videos differ
+    
     // height: 250, // Replaced by aspectRatio for responsiveness
-    // backgroundColor: '#000', // Moved to videoContainer
+    // backgroundColor: '#FFFFFF', // Moved to videoContainer
     // borderRadius: 12, // Optional: if you want rounded corners on video
   },
   // Quiz Styles
