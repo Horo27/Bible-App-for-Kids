@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, FlatList, StyleSheet, ActivityIndicator, Touc
 import { router, useFocusEffect } from 'expo-router'; // Added useFocusEffect
 import ChapterItem from '@/components/ChapterItem';
 import { fetchChapters } from '@/utils/api'; // Assuming this fetches chapter list
-import { getHeartStatus, HeartStatus, MAX_HEARTS } from '@/utils/heartManager'; // Import
+import { getHeartStatus, HeartStatus, MAX_HEARTS, resetUserProgressForTesting } from '@/utils/heartManager'; // Import
 import { Heart, Search} from 'lucide-react-native'; // Import
 
 
@@ -90,7 +90,12 @@ export default function ChaptersScreen() {
             <Text style={styles.emptyText}>No chapters found</Text>
           </View>
         }
+        
       />
+    {/*Reset button also available on blocked screen for testing */}
+    <TouchableOpacity style={[styles.resetButton, {marginTop: 10}]} onPress={resetUserProgressForTesting}>
+      <Text style={styles.resetButtonText}>Reset Hearts (Test)</Text>
+    </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -177,5 +182,17 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#1F2937',
+  },
+  resetButton: {
+    backgroundColor: '#FFA500', // Orange color for testing button
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  resetButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

@@ -296,6 +296,7 @@ const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
           volume={1.0}
           isMuted={false}
           resizeMode="contain"
+          ignoreSilentSwitch="ignore"
           shouldPlay
           useNativeControls
           style={styles.video}
@@ -318,7 +319,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
@@ -342,11 +343,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    // padding: 16, // Removed padding to allow video to be larger
+    backgroundColor: '#FFFFFF', // Added black background for video area
   },
   video: {
-    width: '100%', // Changed from 50% to take full width
-    aspectRatio: 16/9,
+    width: '102%', // Make video take full width of container
+    aspectRatio: 1/1.04, // Maintain aspect ratio, adjust if your videos differ
+    
+    // height: 250, // Replaced by aspectRatio for responsiveness
+    // backgroundColor: '#FFFFFF', // Moved to videoContainer
+    // borderRadius: 12, // Optional: if you want rounded corners on video
   },
   quizContainer: {
     flex: 1,
@@ -389,7 +395,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   quizButton: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
@@ -401,7 +407,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   disabledButton: {
-    backgroundColor: '#C9B6F4',
+    backgroundColor: '#B0E5F5', // Lighter color for disabled state
   },
   quizScoreText: {
     fontSize: 20,

@@ -86,7 +86,7 @@ export const fetchChapters = async () => {
         title: 'Noah',
         description: 'Faith and courage through the flood',
         image: 'https://i.postimg.cc/BnP2nvZ6/Noe2.png',
-        storyCount: 3
+        storyCount: 1
       }
     ];
   } catch (error) {

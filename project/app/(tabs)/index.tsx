@@ -22,13 +22,14 @@ export default function HomeScreen() {
     
     // Mock data for demo
     setFeaturedStories([
-      { id: '1', title: 'Noah\'s Ark', image: 'https://images.pexels.com/photos/4397899/pexels-photo-4397899.jpeg', description: 'The story of Noah and the great flood' },
-      { id: '2', title: 'David and Goliath', image: 'https://images.pexels.com/photos/4344878/pexels-photo-4344878.jpeg', description: 'A young boy defeats a giant warrior' }
+      { id: '1', title: 'David & Goliath', image: 'https://i.postimg.cc/gkRVHJRZ/5.png', description: 'David defeats the giant Goliath' },
+      { id: '2', title: 'David Plays for Saul', image: 'https://i.postimg.cc/GpQw8dq0/frame4.png', description: 'David calms King Saul with music' },
+      { id: '2', title: 'Noah`s Ark', image: 'https://i.postimg.cc/1XhJcH2v/noah-s-ark.png', description: 'David calms King Saul with music' }
     ]);
     
     setRecentStories([
-      { id: '3', title: 'Creation', image: 'https://images.pexels.com/photos/2101187/pexels-photo-2101187.jpeg' },
-      { id: '4', title: 'Jonah and the Whale', image: 'https://images.pexels.com/photos/4666754/pexels-photo-4666754.jpeg' }
+      { id: '4', title: 'David & Goliath', image: 'https://i.postimg.cc/gkRVHJRZ/5.png'},
+      { id: '5', title: 'David Plays for Saul', image: 'https://i.postimg.cc/GpQw8dq0/frame4.png'}
     ]);
     
     setLoading(false);
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     color: '#8A4FFF',
   },
   welcomeSection: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     padding: 24,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,

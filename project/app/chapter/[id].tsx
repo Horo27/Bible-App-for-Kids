@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   navBar: {
-    backgroundColor: '#8A4FFF',
+    backgroundColor: '#87CEEB',
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
