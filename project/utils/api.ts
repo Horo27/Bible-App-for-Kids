@@ -83,7 +83,7 @@ export const fetchChapters = async () => {
       },
       {
         id: '3',
-        title: 'Noe',
+        title: 'Noah',
         description: 'Faith and courage through the flood',
         image: 'https://i.postimg.cc/BnP2nvZ6/Noe2.png',
         storyCount: 3
@@ -112,24 +112,152 @@ export const fetchStoryById = async (id: string) => {
       '1': {
         id: '1',
         title: 'David & Goliath',
-        video: require('..//assets//images//david&goliath.mp4')
+        video: require('..//assets//images//david&goliath.mp4'),
+        quiz: [
+          {
+            question: "Who was the giant warrior from the Philistines?",
+            options: [
+              { id: "A", text: "Saul" },
+              { id: "B", text: "David" },
+              { id: "C", text: "Goliath" },
+              { id: "D", text: "Samuel" }
+            ],
+            correctAnswerId: "C"
+          },
+          {
+            question: "What did David use to fight Goliath?",
+            options: [
+              { id: "A", text: "A sword and shield" },
+              { id: "B", text: "A bow and arrow" },
+              { id: "C", text: "A slingshot and stones" },
+              { id: "D", text: "A stick and rope" }
+            ],
+            correctAnswerId: "C"
+          },
+          {
+            question: "Why was David brave enough to fight Goliath?",
+            options: [
+              { id: "A", text: "He was a trained soldier" },
+              { id: "B", text: "He wanted to be famous" },
+              { id: "C", text: "He believed God would help him" },
+              { id: "D", text: "He had magical powers" }
+            ],
+            correctAnswerId: "C"
+          }
+        ]
       },
       '5': {
         id: '5',
         title: 'David plays for Saul',
-        video: require('..//assets//images//david_plays_saul.mp4')
+        video: require('..//assets//images//david_plays_saul.mp4'),
+        quiz: [
+          {
+            question: "Why was King Saul feeling sad?",
+            options: [
+              { id: "A", text: "He lost a battle" },
+              { id: "B", text: "He was hungry" },
+              { id: "C", text: "He didn’t know how to feel better" },
+              { id: "D", text: "He missed David" }
+            ],
+            correctAnswerId: "C"
+          },
+          {
+            question: "What instrument did David play for King Saul?",
+            options: [
+              { id: "A", text: "Trumpet" },
+              { id: "B", text: "Harp" },
+              { id: "C", text: "Drums" },
+              { id: "D", text: "Flute" }
+            ],
+            correctAnswerId: "B"
+          },
+          {
+            question: "What happened when David played music for King Saul?",
+            options: [
+              { id: "A", text: "Saul got sleepy" },
+              { id: "B", text: "Saul danced" },
+              { id: "C", text: "Saul felt calm and happy" },
+              { id: "D", text: "Saul left the palace" }
+            ],
+            correctAnswerId: "C"
+          }
+        ]
       },
       '9':{
         id: '9',
         title: 'Moses and the burning bush',
-        video: require('..//assets//images//david.mp4')
+        video: require('..//assets//images//david.mp4'), // Note: This video is 'david.mp4', might be a placeholder
+        quiz: [
+          {
+            question: "What strange thing did Moses see in the desert?",
+            options: [
+              { id: "A", text: "A flying camel" },
+              { id: "B", text: "A bush that was on fire but not burning up" },
+              { id: "C", text: "A rainbow in the sand" },
+              { id: "D", text: "A talking sheep" }
+            ],
+            correctAnswerId: "B"
+          },
+          {
+            question: "Who spoke to Moses from the burning bush?",
+            options: [
+              { id: "A", text: "An angel" },
+              { id: "B", text: "His brother" },
+              { id: "C", text: "God" },
+              { id: "D", text: "A shepherd" }
+            ],
+            correctAnswerId: "C"
+          },
+          {
+            question: "Why did God tell Moses to take off his shoes?",
+            options: [
+              { id: "A", text: "Because they were dirty" },
+              { id: "B", text: "Because he was going to sleep" },
+              { id: "C", text: "Because he was standing on holy ground" },
+              { id: "D", text: "Because it was too hot" }
+            ],
+            correctAnswerId: "C"
+          }
+        ]
       },
       '13': {
         id: '13',
         title: "Noah's Ark",
-        video: require('..//assets//images//noe.mp4')
+        video: require('..//assets//images//noe.mp4'),
+        quiz: [
+          {
+            question: "Why did God tell Noah to build an ark?",
+            options: [
+              { id: "A", text: "To sail to a new land" },
+              { id: "B", text: "To hide from people" },
+              { id: "C", text: "To escape a big storm" },
+              { id: "D", text: "To save his family and animals from a great flood" }
+            ],
+            correctAnswerId: "D"
+          },
+          {
+            question: "How many of each kind of animal did Noah take on the ark?",
+            options: [
+              { id: "A", text: "One" },
+              { id: "B", text: "Two" },
+              { id: "C", text: "Five" },
+              { id: "D", text: "Ten" }
+            ],
+            correctAnswerId: "B"
+          },
+          {
+            question: "What sign did God give to promise never to flood the earth again?",
+            options: [
+              { id: "A", text: "A dove" },
+              { id: "B", text: "A star" },
+              { id: "C", text: "A rainbow" },
+              { id: "D", text: "A mountain" }
+            ],
+            correctAnswerId: "C"
+          }
+        ]
       },
-      // Add more stories as needed
+      // Add more stories and their quizzes as needed
     };
     
     return storyData[id] || null;

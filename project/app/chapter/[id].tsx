@@ -23,14 +23,14 @@ const getStoriesForChapter = (chapterId) => {
         title: 'David & Goliath', 
         description: 'David defeats the giant Goliath',
         image: 'https://i.postimg.cc/gkRVHJRZ/5.png',
-        duration: '3 min'
+        duration: ' < 1 min'
       },
       { 
         id: '5', 
         title: 'David Plays for Saul', 
         description: 'David calms King Saul with music',
         image: 'https://i.postimg.cc/GpQw8dq0/frame4.png',
-        duration: '4 min'
+        duration: '< 1 min'
       }
     ],
     '2': [
@@ -39,7 +39,7 @@ const getStoriesForChapter = (chapterId) => {
         title: 'Moses and the Burning Bush', 
         description: 'God speaks to Moses',
         image: 'https://i.postimg.cc/g2z1CfGN/6.png',
-        duration: '3 min'
+        duration: '< 1 min'
       }
     ],
     '3': [
@@ -47,7 +47,8 @@ const getStoriesForChapter = (chapterId) => {
         id: '13', 
         title: "Noah's Ark", 
         description: 'Faith and courage through the flood',
-        image: "https://i.postimg.cc/1XhJcH2v/noah-s-ark.png"
+        image: "https://i.postimg.cc/1XhJcH2v/noah-s-ark.png",
+        duration: '< 1 min'
       },
     ],
   };
@@ -57,6 +58,7 @@ const getStoriesForChapter = (chapterId) => {
 
 // Mock data for chapter info - replace with API call
 const getChapterInfo = (chapterId) => {
+  console.log("hello")
   // API integration point - fetch chapter info
   const chapters = {
     '1': { 
@@ -70,7 +72,7 @@ const getChapterInfo = (chapterId) => {
       image: 'https://i.postimg.cc/hv83w0wk/moses2.png'
     },
     '3': {
-      title: 'Noe',
+      title: 'Noah',
       description: 'Faith and courage through the flood',
       image: 'https://i.postimg.cc/BnP2nvZ6/Noe2.png'
     }
